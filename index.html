@@ -1,0 +1,68 @@
+<head>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+  
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <script >
+
+
+    </script>
+  </head>
+  
+  <body>
+    <img src="write.jpg" alt="image">
+   
+
+  
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+
+  </body>
+
+  <footer>
+    <script>
+        var player = document.getElementById('my-video');
+
+      
+  // initialize serial port
+document.querySelector('button').addEventListener('click', async () => {
+  console.log('hello');
+  // Prompt user to select any serial port.
+  const port = await na.vigator.serial.requestPort();
+
+  const ports = await navigator.serial.getPorts();
+
+  await port.open({ baudRate: 9600 });
+
+
+  const reader = port.readable.getReader();
+
+// Listen to data coming from the serial device.
+while (true) {
+  const { value, done } = await reader.read();
+  if (done) {
+    // Allow the serial port to be closed later.
+    reader.releaseLock();
+    break;
+  }
+  // value is a Uint8Array.
+  var temp_info = value[0];
+  if (temp_info==0){
+    player.play();
+  }
+  else{
+    player.pause();
+  }
+  console.log(value[0]);
+}
+
+
+  
+});
+
+
+
+
+
+
+    </script>
+
